@@ -20,20 +20,21 @@ const initialPosition = {
 };
 
 export default function Canvas() {
-    const [shape, setShape] = useState({
+    const [shape, setShape] = useImmer({
         color: 'orange',
         position: initialPosition,
     });
 
     function handleMove(dx: number, dy: number) {
-        shape.position.x += dx;
-        shape.position.y += dy;
+        setShape(draft => {
+            draft.position.x += dx;
+            draft.position.y += dy;
+        })
     }
 
     function handleColorChange(e: any) {
-        setShape({
-            ...shape,
-            color: e.target.value,
+        setShape(draft => {
+            draft.color = e.target.value;
         });
     }
 
