@@ -28,7 +28,17 @@ export default function ShoppingCart() {
         initialProducts
     );
 
-    function handleIncreaseClick(productId: number) { }
+    function handleIncreaseClick(productId: number) {
+        const updatedProducts = products.map(p => {
+            if (p.id === productId)
+                return {
+                    ...p,
+                    count: p.count + 1
+                };
+            return p;
+        });
+        setProducts(updatedProducts);
+    }
 
     return (
         <ul>
