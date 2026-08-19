@@ -22,29 +22,28 @@ const initialTodos = [
 ];
 
 export default function TaskApp() {
-    const [todos, setTodos] = useState(initialTodos);
+    const [todos, updateTodos] = useImmer(initialTodos);
 
     function handleAddTodo(title: string) {
-        todos.push({
-            id: nextId++,
-            title: title,
-            done: false,
+        updateTodos(draft => {
+            draft.push({
+                id: nextId++,
+                title: title,
+                done: false
+            });
         });
     }
 
     function handleChangeTodo(nextTodo: Todo) {
-        const todo = todos.find(
-            (t) => t.id === nextTodo.id
-        );
-        todo.title = nextTodo.title;
-        todo.done = nextTodo.done;
+        updateTodos(draft => {
+            const todo = draft.find(d => d.id === nextTodo.id);
+            todo!!.title = nextTodo.title;
+            todo!!.done = nextTodo.done;
+        });
     }
 
     function handleDeleteTodo(todoId: number) {
-        const index = todos.findIndex(
-            (t) => t.id === todoId
-        );
-        todos.splice(index, 1);
+        updateTodos(draft => draft.filter(t => t.id !== todoId));
     }
 
     return (
