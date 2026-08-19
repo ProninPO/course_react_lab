@@ -5,15 +5,20 @@
   После того, как вы это сделаете, обратите внимание, что нажатие на кнопку также увеличивает счетчик нажатий на страницу. Ваш коллега, написавший родительский компонент, настаивает, что onChangeColor не увеличивает никаких счетчиков. Что еще может происходить? Исправьте это так, чтобы нажатие на кнопку только изменяло цвет и не увеличивало счетчик.
 */
 
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 
 function ColorSwitch({
   onChangeColor
 }: {
   onChangeColor: () => void
 }) {
+  function handleClick(e) {
+    e.stopPropagation();
+    onChangeColor();
+  }
+
   return (
-    <button>
+    <button onClick={handleClick}>
       Change color
     </button>
   );
@@ -45,22 +50,5 @@ export default function App() {
       <br />
       <h2>Clicks on the page: {clicks}</h2>
     </div>
-  );
-}
-
-import { useState } from "react";
-
-function ColorSwitch({
-  onChangeColor
-}: {
-  onChangeColor: () => void
-}) {
-  return (
-    <button onClick={(e) => {
-      e.stopPropagation(); // Останавливаем всплытие события
-      onChangeColor();     // Вызываем переданный обработчик
-    }}>
-      Change color
-    </button>
   );
 }
