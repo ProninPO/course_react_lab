@@ -14,6 +14,8 @@ export default function TrafficLight() {
 
     function handleClick() {
         setWalk(!walk)
+        let message: string = walk ? 'Stop is next' : 'Walk is next'
+        alert(message);
     }
 
     return (
