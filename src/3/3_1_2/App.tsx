@@ -9,21 +9,46 @@
     Убедитесь, что она также обновляет текст внизу!
 */
 
+import { useState } from "react";
+
 
 export default function EditProfile() {
+    const [firstName, setFirstName] = useState('Jane');
+    const [lastName, setLastName] = useState('Jacobs');
+    const [isEditing, setIsEditing] = useState(false);
+
+    function handleFormSubmit(e: any) {
+        e.preventDefault();
+        setIsEditing(!isEditing);
+    }
+
+    function handleFirstNameChanged(e: any) {
+        setFirstName(e.target.value);
+    }
+
+    function handleLastNameChanged(e: any) {
+        setLastName(e.target.value);
+    }
+
     return (
-        <form>
+        <form onSubmit={handleFormSubmit}>
             <label>
-                First name: <b>Jane</b>
-                <input />
+                First name: {
+                    isEditing ?
+                    <input value={firstName} onChange={handleFirstNameChanged}/> :
+                    <b>{firstName}</b>
+                }
             </label>
             <label>
-                Last name: <b>Jacobs</b>
-                <input />
+                Last name: {
+                    isEditing ?
+                    <input value={lastName} onChange={handleLastNameChanged}/> :
+                    <b>{lastName}</b>
+                }
             </label>
-            <button type="submit">Edit Profile</button>
+            <button type="submit">{isEditing ? 'Save' : 'Edit'} Profile</button>
             <p>
-                <i>Hello, Jane Jacobs!</i>
+                <i>Hello, {firstName} {lastName}!</i>
             </p>
         </form>
     );
