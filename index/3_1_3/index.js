@@ -1,6 +1,25 @@
+let firstName = 'Jane';
+let lastName = 'Jacobs';
+let isEditing = false;
+
 function handleFormSubmit(e) {
     e.preventDefault();
-    if (editButton.textContent === 'Edit Profile') {
+    isEditing = !isEditing;
+    updateDOM();
+  }
+  
+  function handleFirstNameChange(e) {
+    firstName = e.target.value;
+    updateDOM();
+  }
+
+  function handleLastNameChange(e) {
+    lastName = e.target.value;
+    updateDOM();
+  }
+
+  function updateDOM() {
+    if (isEditing) {
       editButton.textContent = 'Save Profile';
       hide(firstNameText);
       hide(lastNameText);
@@ -13,26 +32,11 @@ function handleFormSubmit(e) {
       show(firstNameText);
       show(lastNameText);
     }
+    firstNameText.textContent = firstName;
+    lastNameText.textContent = lastName;
+    helloText.textContent = 'Hello ' + firstName + ' ' + lastName + '!';
   }
-  
-  function handleFirstNameChange() {
-    firstNameText.textContent = firstNameInput.value;
-    helloText.textContent = (
-      'Hello ' +
-      firstNameInput.value + ' ' +
-      lastNameInput.value + '!'
-    );
-  }
-  
-  function handleLastNameChange() {
-    lastNameText.textContent = lastNameInput.value;
-    helloText.textContent = (
-      'Hello ' +
-      firstNameInput.value + ' ' +
-      lastNameInput.value + '!'
-    );
-  }
-  
+
   function hide(el) {
     el.style.display = 'none';
   }
