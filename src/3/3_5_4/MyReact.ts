@@ -7,6 +7,9 @@ export function useReducer<State, Action>(
   const [state, setState] = useState(initialState);
 
   // ???
+  function dispatch(action: Action) {
+    setState(s => reducer(s, action));
+  }
 
   return [state, dispatch];
 }
