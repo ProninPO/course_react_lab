@@ -11,6 +11,15 @@ export default function Chat(
         dispatch: (action: Action) => void
     }
 ) {
+  
+  function handleClick() {
+    alert(`Sending ${message} to ${contact.name}`);
+    dispatch({
+      type: 'sent_message',
+      message: ''
+    })
+  }
+
   return (
     <section className="chat">
       <textarea
@@ -24,7 +33,9 @@ export default function Chat(
         }}
       />
       <br />
-      <button>Send to {contact.email}</button>
+      <button
+        onClick={handleClick}
+        >Send to {contact.email}</button>
     </section>
   );
 }
