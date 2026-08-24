@@ -8,27 +8,39 @@
     inline: 'center',
   });
 */
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 export default function CatFriends() {
   const [index, setIndex] = useState(0);
+  const catRef = useRef(null);
+
+  function handleClickNext() {
+    flushSync(() => {
+      if (index < catList.length - 1) {
+        setIndex(index + 1);
+      } else {
+        setIndex(0);
+      }
+    });
+    catRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    })
+  }
+
   return (
     <>
       <nav>
-        <button onClick={() => {
-          if (index < catList.length - 1) {
-            setIndex(index + 1);
-          } else {
-            setIndex(0);
-          }
-        }}>
+        <button onClick={handleClickNext}>
           Next
         </button>
       </nav>
       <div>
         <ul>
           {catList.map((cat, i) => (
-            <li key={cat.id}>
+            <li key={cat.id} ref={index === i ? catRef : null}>
               <img
                 className={
                   index === i ?
