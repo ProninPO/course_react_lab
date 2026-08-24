@@ -10,6 +10,10 @@ export default function MyInput(
     }) {
 
     const ref = useRef(null);
+    
+    useEffect(() => {
+        ref.current.focus();
+    }, []);
 
     // TODO: This doesn't quite work. Fix it.
     // ref.current.focus()    
