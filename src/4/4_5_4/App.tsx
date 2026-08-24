@@ -39,10 +39,7 @@ export default function App() {
       <hr />
       <ChatRoom
         roomId={roomId}
-        createConnection={isEncrypted ?
-          createEncryptedConnection :
-          createUnencryptedConnection
-        }
+        isEncrypted={isEncrypted}
       />
     </>
   );

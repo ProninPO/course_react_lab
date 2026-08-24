@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Connection } from './chat';
+import { Connection, createEncryptedConnection, createUnencryptedConnection } from './chat';
 
-export default function ChatRoom({ roomId, createConnection }: {
-    roomId: string; createConnection: (roomId: string) => Connection;
+export default function ChatRoom({ roomId, isEncrypted }: {
+    roomId: string, isEncrypted: boolean
 }) {
     useEffect(() => {
-        const connection = createConnection(roomId);
+        const createConnection = isEncrypted ?
+            createEncryptedConnection : 
+            createUnencryptedConnection;
+        const connection = createConnection(roomId);            
         connection.connect();
         return () => connection.disconnect();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [roomId]);
+    }, [roomId, isEncrypted]);
 
     return <h1>Welcome to the {roomId} room!</h1>;
 }
