@@ -9,16 +9,22 @@
 
 import { useState, useEffect } from 'react';
 import { fetchBio } from './api.ts';
+import { start } from 'node:repl';
 
 export default function Page() {
   const [person, setPerson] = useState('Alice');
   const [bio, setBio] = useState<string | null> (null);
 
   useEffect(() => {
+    let ignore: boolean = false;
+    
     setBio(null);
     fetchBio(person).then(result => {
-      setBio(result);
+      if (!ignore)
+        setBio(result);
     });
+
+    return () => { ignore = true };
   }, [person]);
 
   return (
