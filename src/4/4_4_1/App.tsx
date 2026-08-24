@@ -11,21 +11,9 @@ import { initialTodos, createTodo, Todo } from "./todos";
 export default function TodoList() {
   const [todos, setTodos] = useState(initialTodos);
   const [showActive, setShowActive] = useState(false);
-  const [activeTodos, setActiveTodos] = useState<Todo[]>([]);
-  const [visibleTodos, setVisibleTodos] = useState<Todo[]>([]);
-  const [footer, setFooter] = useState<JSX.Element>(<></>);
 
-  useEffect(() => {
-    setActiveTodos(todos.filter((todo) => !todo.completed));
-  }, [todos]);
-
-  useEffect(() => {
-    setVisibleTodos(showActive ? activeTodos : todos);
-  }, [showActive, todos, activeTodos]);
-
-  useEffect(() => {
-    setFooter(<footer>{activeTodos.length} todos left</footer>);
-  }, [activeTodos]);
+  const activeTodos = todos.filter(t => !t.completed);
+  const visibleTodos = showActive ? activeTodos : todos;
 
   return (
     <>
@@ -45,7 +33,7 @@ export default function TodoList() {
           </li>
         ))}
       </ul>
-      {footer}
+      <footer>{activeTodos.length} todos left</footer>
     </>
   );
 }
